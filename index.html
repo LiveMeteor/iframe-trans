@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>iframe+postMessage 跨域通信 主页面</title>
+</head>
+
+<body>
+    <h1>主页面</h1>
+    <iframe id="child" src="iframepage.html"></iframe>
+    <div>
+        <h2>主页面接收消息区域</h2>
+        <span id="message"></span>
+    </div>
+    <script>
+        window.tag = "index";
+
+        window.addEventListener('message', function(event) {
+            console.log("index data=" + event.data);
+            const message = document.getElementById('message');
+            message.innerHTML = `Receive: ${event.data}`;
+        });
+
+        const frame = document.getElementById("child");
+        frame.onload = function () {
+            frame.contentWindow.postMessage("主页面消息", frame.src);
+        }
+    </script>
+    
+</body>
+
+</html>
