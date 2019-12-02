@@ -23,9 +23,16 @@
         });
 
         const frame = document.getElementById("child");
+        frame.contentWindow.addEventListener("error", evt => {
+            console.warn(evt.error && evt.error.stack);
+        });
+        frame.contentWindow.addEventListener("unhandledrejection", evt => {
+            console.warn(evt.reason);
+        });
         frame.onload = function () {
             frame.contentWindow.postMessage("主页面消息", frame.src);
         }
+        
     </script>
     
 </body>
